@@ -1,0 +1,10 @@
+@import url('../../node_modules/bootstrap/dist/css/bootstrap.css');
+
+html, body, #application-container {
+	height: 100%;
+}
+
+main {
+	min-height: calc(100% - 102px);
+	padding: 15px 0;
+}
