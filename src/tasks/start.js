@@ -1,29 +1,44 @@
-let path = require('path');
-let toArgv = require('object-to-argv');
-let spawn = require('child_process').spawn;
+let chalk = require('chalk');
+let portfinder = require('portfinder');
+let compiler = require('../utils/compiler');
+let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
-	let command = path.resolve(__dirname, '../../node_modules/.bin/webpack-dev-server');
-	let config = path.resolve(process.cwd(), 'build/webpack.config.dev.js');
+	let showError = errorHandler('An error occurred while starting the application! Are you in a wrong folder, maybe?');
+	let showHeader = true;
 
+	argv.host = argv.host || '0.0.0.0';
 	argv.port = argv.port || 3000;
-	argv.config = argv.config || `"${config}"`;
 
-	if (argv.hot === undefined) {
-		argv.hot = true;
-	}
+	portfinder.basePort = argv.port;
 
-	if (argv.inline === undefined) {
-		argv.inline = true;
-	}
+	portfinder.getPort((error, port) => {
+		if (error) { return showError(error); }
 
-	if (argv.colors === undefined) {
-		argv.colors = true;
-	}
+		try {
+			argv.port = port;
 
-	if (argv.progress === undefined) {
-		argv.progress = true;
-	}
+			return compiler('dev', argv, (hasErrors, details) => {
+				if (hasErrors) { return showError(details); }
 
-	spawn(`"${command}"`, toArgv(argv), { stdio: 'inherit', shell: true });
+				if (showHeader) {
+					console.log('application started: ', chalk.green('yes'));
+					console.log('watching for changes:', chalk.green('yes'));
+					console.log('address:             ', chalk.green(`http://${argv.host}:${argv.port}`));
+
+					console.log();
+
+					console.log(chalk.green('Happy coding :)\n'));
+
+					showHeader = false;
+				}
+
+				console.log();
+
+				console.log(details);
+			});
+		} catch (error) {
+			return showError(error);
+		}
+	});
 };

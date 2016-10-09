@@ -17,4 +17,10 @@ module.exports = function() {
 	console.log('      build          build the application for production');
 	console.log('      deploy         deploy the application');
 	console.log('      help <task>    show task help');
+
+	console.log();
+
+	console.log('  Options:\n');
+	console.log('      --help, -h       show this help');
+	console.log('      --version, -v    show the version');
 };
