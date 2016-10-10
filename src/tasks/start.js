@@ -1,34 +1,38 @@
 let chalk = require('chalk');
 let portfinder = require('portfinder');
+let ora = require('ora');
 let compiler = require('../utils/compiler');
 let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
-	let showError = errorHandler('An error occurred while starting the application! Are you in a wrong folder, maybe?');
 	let showHeader = true;
+	let spinner = ora('Starting application').start();
 
 	argv.host = argv.host || '0.0.0.0';
 	argv.port = argv.port || 3000;
+	argv.notify = argv.notify !== undefined ? argv.notify : true;
 
 	portfinder.basePort = argv.port;
 
 	portfinder.getPort((error, port) => {
-		if (error) { return showError(error); }
+		if (error) { throw new Error(error); }
 
 		try {
 			argv.port = port;
 
 			return compiler('dev', argv, (hasErrors, details) => {
-				if (hasErrors) { return showError(details); }
+				if (hasErrors) { throw new Error(details); }
+
+				spinner.stop();
 
 				if (showHeader) {
-					console.log('application started: ', chalk.green('yes'));
-					console.log('watching for changes:', chalk.green('yes'));
-					console.log('address:             ', chalk.green(`http://${argv.host}:${argv.port}`));
+					console.log('Application started: ', chalk.green('yes'));
+					console.log('Watching for changes:', chalk.green('yes'));
+					console.log('Address:             ', chalk.green(`http://${argv.host}:${argv.port}`));
 
 					console.log();
 
-					console.log(chalk.green('Happy coding :)\n'));
+					console.log(chalk.green('Happy coding :)'));
 
 					showHeader = false;
 				}
@@ -38,7 +42,9 @@ module.exports = function(argv) {
 				console.log(details);
 			});
 		} catch (error) {
-			return showError(error);
+			spinner.stop();
+
+			errorHandler('start', error);
 		}
 	});
 };
