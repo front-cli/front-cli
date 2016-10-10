@@ -10,18 +10,19 @@ console.log(); // padding
 switch (task) {
 	case '--version':
 	case '-v':
-		require('./src/tasks/version')();
+		require('./src/help/version')();
 	break;
 
 	case '--help':
 	case '-h':
-		require('./src/tasks/help')();
+		require('./src/help')();
 	break;
 
 	case 'init':
 	case 'start':
 	case 'build':
 	case 'deploy':
+	case 'help':
 		return require('./src/tasks/' + task)(argv);
 	break;
 
