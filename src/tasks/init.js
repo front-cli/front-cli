@@ -1,54 +1,66 @@
 let fs = require('fs-extra');
 let path = require('path');
 let chalk = require('chalk');
-let getTemplate = require('../utils/getTemplate');
+let ora = require('ora');
+let _ = require('underscore');
+let pkg = require('../templates/package.json');
+let errorHandler = require('../utils/errorHandler');
+
+function folderIsEmpty(folder) {
+	try {
+		return fs.readdirSync(folder).length === 0;
+	} catch (error) {
+		return true;
+	}
+
+	return false;
+}
+
+function replaceFileContent(file, data) {
+	let content = fs.readFileSync(file, 'utf8');
+
+	content = _.template(content)(data);
+
+	fs.outputFileSync(file, content);
+}
 
 module.exports = function(argv) {
 	let appName = argv._[1];
 	let root = path.join(process.cwd(), appName);
-	let files = [
-		['application/initializer.js', 'initializer.js'],
-		['application/main.js', 'main.js'],
-		['application/routes.js', 'routes.js'],
-		['application/components/.gitkeep', ''],
-		['application/helpers/.gitkeep', ''],
-		['application/mixins/.gitkeep', ''],
-		['application/models/.gitkeep', ''],
-		['application/views/commons/layout.vue', 'layout.vue'],
-		['application/views/commons/header.vue', 'header.vue'],
-		['application/views/commons/footer.vue', 'footer.vue'],
-		['application/views/commons/home.vue', 'home.vue'],
-		['application/views/commons/404.vue', '404.vue'],
-		['assets/css/main.css', 'main.css'],
-		['assets/img/logo.png', 'logo.png'],
-		['build/webpack.config.dev.js', 'webpack.config.dev.js'],
-		['build/webpack.config.prod.js', 'webpack.config.prod.js'],
-		['.gitignore', '.gitignore'],
-		['config.js', 'config.js'],
-		['favicon.ico', 'favicon.ico'],
-		['index.html', 'index.html'],
-		['package.json', 'package.json'],
-		['node_modules', 'node_modules']
-	];
+	let spinner = ora('Creating application').start();
 
 	try {
-		files.forEach(function(file) {
-			let [filepath, template] = file;
-			let toCopy = template.match(/(node_modules|\.ico|\.png)/);
+		if (!folderIsEmpty(root)) {
+			throw new Error('Destination folder is not empty');
+		}
 
-			if (toCopy) {
-				fs.copySync(path.resolve(__dirname, `../templates/${template}`), path.join(root, filepath));
-			} else {
-				template = template ? getTemplate(template, { appName }) : template;
+		fs.copy(path.resolve(__dirname, '../templates'), root, () => {
+			let files = [];
+			let re = /(node_modules|\.eot|\.woff2?|\.ttf|\.svg|\.png|\.jpg|\.jpeg|\.bmp|\.ico)/i;
 
-				fs.outputFileSync(path.join(root, filepath), template);
-			}
+			fs.walk(root)
+				.on('data', item => {
+					if (!item.path.match(re)) {
+						let isFile = fs.statSync(item.path).isFile();
+
+						if (isFile) {
+							files.push(item.path);
+						}
+					}
+				})
+				.on('end', () => {
+					let data = _.extend(pkg, { appName });
+
+					files.forEach(file => replaceFileContent(file, data));
+
+					spinner.stop();
+
+					console.log(chalk.green('Application created!'));
+				});
 		});
-
-		console.log(chalk.green('Application created!'));
 	} catch(error) {
-		console.log(chalk.red('An error occurred:'));
-		console.log();
-		console.log(error);
+		spinner.stop();
+
+		errorHandler('init', error);
 	};
 };

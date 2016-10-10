@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let webpackDevServer = require('webpack-dev-server');
 let path = require('path');
+let Notifier = require('./notifier');
 
 module.exports = function(mode = 'dev', options, callback) {
 	let webpackConfigPath = path.resolve(process.cwd(), `build/webpack.config.${mode}.js`);
@@ -14,15 +15,17 @@ module.exports = function(mode = 'dev', options, callback) {
 	webpackConfig.entry.unshift( devServerEntry );
 	webpackConfig.plugins.unshift( new webpack.HotModuleReplacementPlugin() );
 
+	if (options.notify) {
+		webpackConfig.plugins.push( new Notifier() );
+	}
+
 	let compiler = webpack(webpackConfig);
 
 	if (mode === 'dev') {
 		new webpackDevServer(compiler, {
 			hot: true,
 			quiet: true,
-			stats: {
-				colors: true
-			}
+			clientLogLevel: 'error'
 		}).listen(options.port, options.host);
 	} else {
 		compiler.run(() => {});
