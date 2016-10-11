@@ -6,28 +6,32 @@ let Notifier = require('./notifier');
 module.exports = function(mode = 'dev', options, callback) {
 	let webpackConfigPath = path.resolve(process.cwd(), `build/webpack.config.${mode}.js`);
 	let webpackConfig = require(webpackConfigPath);
-	let devServerEntry = path.resolve(__dirname, '../../node_modules/webpack-dev-server/client?{{host}}:{{port}}/');
-
-	devServerEntry = devServerEntry.replace('{{host}}', `http://${options.host}`);
-	devServerEntry = devServerEntry.replace('{{port}}', options.port);
-
-	webpackConfig.entry.unshift( path.resolve(__dirname, '../../node_modules/webpack/hot/dev-server') );
-	webpackConfig.entry.unshift( devServerEntry );
-	webpackConfig.plugins.unshift( new webpack.HotModuleReplacementPlugin() );
+	let compiler;
 
 	if (options.notify) {
 		webpackConfig.plugins.push( new Notifier() );
 	}
 
-	let compiler = webpack(webpackConfig);
-
 	if (mode === 'dev') {
+		let devServerEntry = path.resolve(__dirname, '../../node_modules/webpack-dev-server/client?{{host}}:{{port}}/');
+
+		devServerEntry = devServerEntry.replace('{{host}}', `http://${options.host}`);
+		devServerEntry = devServerEntry.replace('{{port}}', options.port);
+
+		webpackConfig.entry.unshift( path.resolve(__dirname, '../../node_modules/webpack/hot/dev-server') );
+		webpackConfig.entry.unshift( devServerEntry );
+		webpackConfig.plugins.unshift( new webpack.HotModuleReplacementPlugin() );
+
+		compiler = webpack(webpackConfig);
+
 		new webpackDevServer(compiler, {
 			hot: true,
 			quiet: true,
 			clientLogLevel: 'error'
 		}).listen(options.port, options.host);
 	} else {
+		compiler = webpack(webpackConfig);
+
 		compiler.run(() => {});
 	}
 
@@ -54,6 +58,6 @@ module.exports = function(mode = 'dev', options, callback) {
 			});
 		}
 
-		callback(stats.hasErrors(), details);
+		return callback(stats.hasErrors(), details);
 	});
 };
