@@ -1,5 +1,4 @@
 var path = require('path');
-var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -63,8 +62,7 @@ module.exports = {
 			filename: 'index.html',
 			template: 'index.html',
 			favicon: 'favicon.ico'
-		}),
-		// new plugins.Notifier()
+		})
 	],
 
 	devtool: 'cheap-module-eval-source-map'

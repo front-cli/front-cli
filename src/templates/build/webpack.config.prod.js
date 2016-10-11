@@ -15,19 +15,6 @@ module.exports = {
 	},
 
 	module: {
-		// preLoaders: [
-		// 	{
-		// 		test: /\.js$/,
-		// 		exclude: /node_modules/,
-		// 		loader: 'jshint-loader',
-		// 		query: {
-		// 			esversion: 6,
-		// 			emitErrors: true,
-		// 			failOnHint: true
-		// 		}
-		// 	}
-		// ],
-
 		loaders: [
 			{
 				test: /\.vue$/i,
@@ -36,7 +23,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/i,
-				loader: 'babel-loader',
+				loaders: ['babel-loader', 'eslint-loader'],
 				exclude: /node_modules/
 			},
 			{
@@ -94,7 +81,6 @@ module.exports = {
 			filename: 'index.html',
 			template: 'index.html',
 			favicon: 'favicon.ico'
-		}),
-		// new plugins.Notifier()
+		})
 	]
 };
