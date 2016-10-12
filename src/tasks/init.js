@@ -25,8 +25,8 @@ function replaceFileContent(file, data) {
 }
 
 module.exports = function(argv) {
-	let appName = argv._[1];
-	let root = path.join(process.cwd(), appName);
+	let appName = argv._[1] || path.basename(process.cwd());
+	let root = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
 	let spinner = ora('Creating application').start();
 
 	try {
