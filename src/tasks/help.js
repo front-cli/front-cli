@@ -1,5 +1,4 @@
 let chalk = require('chalk');
-let pkg = require('../../package.json');
 
 module.exports = function(argv) {
 	let task = argv._[1];

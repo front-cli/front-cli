@@ -45,7 +45,7 @@ module.exports = function(mode = 'dev', options, callback) {
 		compiler.run(() => {});
 	}
 
-	compiler.plugin('done', (stats) => {
+	compiler.plugin('done', stats => {
 		let details = stats.toString({
 			colors: true,
 			version: true,
