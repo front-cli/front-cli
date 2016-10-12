@@ -10,7 +10,7 @@
 	},
 	"rules": {
 		"indent": ["error", "tab"],
-		"linebreak-style": false,
+		"linebreak-style": 0,
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
 		"no-console": ["error", { "allow": ["warn", "error"] }],

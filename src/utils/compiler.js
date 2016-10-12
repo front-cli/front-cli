@@ -5,8 +5,18 @@ let Notifier = require('./notifier');
 
 module.exports = function(mode = 'dev', options, callback) {
 	let webpackConfigPath = path.resolve(process.cwd(), `build/webpack.config.${mode}.js`);
-	let webpackConfig = require(webpackConfigPath);
+	let webpackConfig = require(webpackConfigPath)(require);
 	let compiler;
+
+	webpackConfig.resolve.root.push( path.resolve(__dirname, '../../node_modules') );
+
+	webpackConfig.resolveLoader = {
+		root: [
+			'node_modules',
+			path.resolve(process.cwd(), 'node_modules'),
+			path.resolve(__dirname, '../../node_modules')
+		]
+	};
 
 	if (options.notify) {
 		webpackConfig.plugins.push( new Notifier() );
