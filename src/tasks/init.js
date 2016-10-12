@@ -2,8 +2,10 @@ let fs = require('fs-extra');
 let path = require('path');
 let chalk = require('chalk');
 let ora = require('ora');
-let _ = require('underscore');
-let pkg = require('../templates/package.json');
+let inquirer = require('inquirer');
+let listTemplatesRepositories = require('../utils/listTemplatesRepositories');
+let downloadGitRepo = require('download-git-repo');
+let replacer = require('../utils/replacer');
 let errorHandler = require('../utils/errorHandler');
 
 function folderIsEmpty(folder) {
@@ -16,47 +18,63 @@ function folderIsEmpty(folder) {
 	return false;
 }
 
-function replaceFileContent(file, data) {
-	let content = fs.readFileSync(file, 'utf8');
-
-	content = _.template(content)(data);
-
-	fs.outputFileSync(file, content);
-}
-
 module.exports = function(argv) {
 	let appName = argv._[1] || path.basename(process.cwd());
 	let root = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
-	let spinner = ora('Creating application').start();
+	let spinner = ora('Creating application');
 
 	try {
 		if (!folderIsEmpty(root)) {
-			throw new Error('Destination folder is not empty');
+			throw new Error(`${appName} folder is not empty`);
 		}
 
-		fs.copy(path.resolve(__dirname, '../templates'), root, () => {
-			let files = [];
-			let re = /(node_modules|\.eot|\.woff2?|\.ttf|\.svg|\.png|\.jpg|\.jpeg|\.bmp|\.ico)/i;
+		listTemplatesRepositories((error, repositories) => {
+			if (error) {
+				return errorHandler('init', error);
+			}
 
-			fs.walk(root)
-				.on('data', item => {
-					if (!item.path.match(re)) {
-						let isFile = fs.statSync(item.path).isFile();
+			let templateChoices = [];
 
-						if (isFile) {
-							files.push(item.path);
-						}
+			repositories.forEach(({ description: name, full_name: value } = repository) => {
+				templateChoices.push({ name, value });
+			});
+
+			let questions = [{
+				type: 'list',
+				name: 'appTemplate',
+				message: 'Choose a template:',
+				choices: templateChoices
+			}];
+
+			inquirer.prompt(questions).then(({ appTemplate }) => {
+				console.log();
+
+				spinner.start();
+
+				downloadGitRepo(appTemplate, root, error => {
+					if (error) {
+						spinner.stop();
+
+						fs.removeSync(root);
+
+						return errorHandler('init', error);
 					}
-				})
-				.on('end', () => {
-					let data = _.extend(pkg, { appName });
 
-					files.forEach(file => replaceFileContent(file, data));
+					replacer(root, { appName }, error => {
+						if (error) {
+							spinner.stop();
 
-					spinner.stop();
+							fs.removeSync(root);
 
-					console.log(chalk.green('Application created!'));
+							return errorHandler('init', error);
+						}
+
+						spinner.stop();
+
+						console.log(chalk.green('Application created!'));
+					});
 				});
+			});
 		});
 	} catch(error) {
 		spinner.stop();
