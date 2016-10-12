@@ -32,4 +32,4 @@ module.exports = function(folder, data, callback) {
 				return callback(error);
 			}
 		});
-}
+};

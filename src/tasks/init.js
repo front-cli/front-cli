@@ -55,7 +55,7 @@ module.exports = function(argv) {
 					if (error) {
 						spinner.stop();
 
-						fs.removeSync(root);
+						fs.emptyDirSync(root);
 
 						return errorHandler('init', error);
 					}
@@ -64,7 +64,7 @@ module.exports = function(argv) {
 						if (error) {
 							spinner.stop();
 
-							fs.removeSync(root);
+							fs.emptyDirSync(root);
 
 							return errorHandler('init', error);
 						}
