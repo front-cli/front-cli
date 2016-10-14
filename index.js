@@ -3,7 +3,7 @@
 let chalk = require('chalk');
 let pkg = require('./package.json');
 let argv = require('minimist')(process.argv.slice(2));
-let task = argv._[0] || '--help';
+let task = process.argv.slice(2)[0] || '--help';
 
 console.log(); // padding
 
