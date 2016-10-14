@@ -12,9 +12,9 @@ module.exports = function(mode = 'dev', options, callback) {
 
 	webpackConfig.resolveLoader = {
 		root: [
-			'node_modules',
 			path.resolve(process.cwd(), 'node_modules'),
-			path.resolve(__dirname, '../../node_modules')
+			path.resolve(__dirname, '../../node_modules'),
+			'node_modules'
 		]
 	};
 
