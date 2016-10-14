@@ -1,4 +1,7 @@
-# Front CLI
+<div style="text-align:center;">
+    [![Front CLI](logo/logo-lg.png)](https://ava.li)
+</div>
+
 > A simple tool to automate front-end projects
 
 ## Installation
