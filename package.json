@@ -1,14 +1,11 @@
 {
 	"name": "front-cli",
-	"version": "0.0.1-alpha2",
+	"version": "0.0.1-alpha3",
 	"description": "A simple tool to automate front-end development",
 	"main": "index.js",
 	"preferGlobal": true,
 	"bin": {
 		"front": "index.js"
-	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
