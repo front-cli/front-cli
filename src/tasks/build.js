@@ -30,7 +30,7 @@ module.exports = function(argv) {
 
 					spinner.stop();
 
-					console.log(chalk.green('Application built with success :)'));
+					console.log(chalk.green.bold('Application built with success :)'));
 				});
 			});
 		});
