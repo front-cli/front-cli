@@ -10,11 +10,11 @@ let errorMessages = {
 module.exports = function (type, details) {
 	let message = errorMessages[type];
 
-	console.log(chalk.red(message));
+	console.log(chalk.red.bold(message));
 
 	if (details) {
 		console.log();
-		console.log(chalk.gray('Error details:'));
+		console.log(chalk.bgRed.bold('Error details:'));
 		console.log();
 		console.log(details);
 	}

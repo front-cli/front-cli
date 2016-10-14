@@ -26,5 +26,5 @@ switch (task) {
 		break;
 
 	default:
-		console.log(chalk.red('Task or option not found'));
+		console.log(chalk.red.bold('Task or option not found'));
 }

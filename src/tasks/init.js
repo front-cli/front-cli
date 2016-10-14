@@ -69,7 +69,7 @@ module.exports = function(argv) {
 
 						spinner.stop();
 
-						console.log(chalk.green('Application created!'));
+						console.log(chalk.green.bold('Application created!'));
 					});
 				});
 			});

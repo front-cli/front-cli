@@ -12,6 +12,6 @@ module.exports = function(argv) {
 			break;
 
 		default:
-			console.log(chalk.red('Task not found'));
+			console.log(chalk.red.bold('Task not found'));
 	}
 };

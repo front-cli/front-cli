@@ -26,13 +26,13 @@ module.exports = function(argv) {
 				spinner.stop();
 
 				if (showHeader) {
-					console.log('Application started: ', chalk.green('yes'));
-					console.log('Watching for changes:', chalk.green('yes'));
-					console.log('Address:             ', chalk.green(`http://${argv.host}:${argv.port}`));
+					console.log('Application started: ', chalk.green.bold('yes'));
+					console.log('Watching for changes:', chalk.green.bold('yes'));
+					console.log('Address:             ', chalk.green.bold(`http://${argv.host}:${chalk.cyan(argv.port)}`));
 
 					console.log();
 
-					console.log(chalk.green('Happy coding :)'));
+					console.log(chalk.green.bold('Happy coding :)'));
 
 					showHeader = false;
 				}
