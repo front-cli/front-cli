@@ -1,6 +1,8 @@
-<div style="text-align:center;">
-    [![Front CLI](logo/logo-lg.png)](https://ava.li)
-</div>
+<p align="center">
+    <a href="https://front-cli.github.io">
+        <img src="logo/logo-lg.png" alt="Front CLI"/>
+    </a>
+</p>
 
 > A simple tool to automate front-end projects
 
