@@ -1,11 +1,14 @@
 {
 	"name": "front-cli",
-	"version": "0.0.1-alpha3",
+	"version": "0.0.1-alpha4",
 	"description": "A simple tool to automate front-end development",
 	"main": "index.js",
 	"preferGlobal": true,
 	"bin": {
 		"front": "index.js"
+	},
+	"scripts": {
+		"lint": "eslint **/*.js"
 	},
 	"repository": {
 		"type": "git",

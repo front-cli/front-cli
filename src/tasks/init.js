@@ -14,8 +14,6 @@ function folderIsEmpty(folder) {
 	} catch (error) {
 		return true;
 	}
-
-	return false;
 }
 
 module.exports = function(argv) {
@@ -35,8 +33,8 @@ module.exports = function(argv) {
 
 			let templateChoices = [];
 
-			repositories.forEach(({ description: name, full_name: value } = repository) => {
-				templateChoices.push({ name, value });
+			repositories.forEach(repo => {
+				templateChoices.push({ name: repo.description, value: repo.full_name });
 			});
 
 			let questions = [{
@@ -80,5 +78,5 @@ module.exports = function(argv) {
 		spinner.stop();
 
 		errorHandler('init', error);
-	};
+	}
 };

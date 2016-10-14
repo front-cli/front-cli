@@ -8,8 +8,8 @@ module.exports = function(argv) {
 		case 'start':
 		case 'build':
 		case 'deploy':
-			return require('../help/' + task)(argv);
-		break;
+			require('../help/' + task)(argv);
+			break;
 
 		default:
 			console.log(chalk.red('Task not found'));

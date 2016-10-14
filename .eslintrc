@@ -9,11 +9,11 @@
 		"sourceType": "module"
 	},
 	"rules": {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": 0,
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
-		"no-console": ["error", { "allow": ["warn", "error"] }],
+		"no-console": 0,
 		"no-empty": ["error", { "allowEmptyCatch": true }]
 	}
 }
