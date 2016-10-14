@@ -48,7 +48,7 @@ Now open the address http://localhost:3000 in the browser and you'll see our app
 
 ### Options
 
-### --host (default: 0.0.0.0)
+#### --host (default: 0.0.0.0)
 
 Change the development server host:
 
@@ -56,7 +56,7 @@ Change the development server host:
 front start --host 192.168.0.0
 ```
 
-### --port (default: 3000)
+#### --port (default: 3000)
 
 Change the development server port:
 
@@ -89,5 +89,5 @@ Wait a few seconds. Now, all we have to do is to get the `dist` folder and deplo
 Disable Front CLI notifications:
 
 ```bash
-front start --no-notify
+front build --no-notify
 ```
