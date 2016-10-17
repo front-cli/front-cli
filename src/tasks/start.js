@@ -21,8 +21,6 @@ module.exports = function(argv) {
 			argv.port = port;
 
 			return compiler('dev', argv, (hasErrors, details) => {
-				if (hasErrors) { throw new Error(details); }
-
 				spinner.stop();
 
 				if (showHeader) {
