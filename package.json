@@ -1,6 +1,6 @@
 {
 	"name": "front-cli",
-	"version": "0.0.1-alpha5",
+	"version": "0.0.1-alpha6",
 	"description": "A simple tool to automate front-end development",
 	"main": "index.js",
 	"preferGlobal": true,
@@ -15,7 +15,7 @@
 		"url": "git+https://github.com/front-cli/front-cli.git"
 	},
 	"engines": {
-		"node": "~6.0.0"
+		"node": ">=6.0.0"
 	},
 	"keywords": [
 		"front",
