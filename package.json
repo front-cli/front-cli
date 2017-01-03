@@ -1,6 +1,6 @@
 {
 	"name": "front-cli",
-	"version": "0.0.1-alpha6",
+	"version": "0.0.1-alpha7",
 	"description": "A simple tool to automate front-end development",
 	"main": "index.js",
 	"preferGlobal": true,
