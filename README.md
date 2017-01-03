@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://front-cli.github.io">
-        <img src="logo/logo-lg.png" alt="Front CLI"/>
+        <img src="https://github.com/front-cli/front-cli/logo/logo-lg.png" alt="Front CLI"/>
     </a>
 </p>
 
