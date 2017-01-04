@@ -4,7 +4,8 @@ let errorMessages = {
 	init: 'An error occurred while creating the application!',
 	start: 'An error occurred while starting the application! Are you in a wrong folder, maybe?',
 	build: 'An error occurred while building the application! Are you in a wrong folder, maybe?',
-	deploy: 'An error occurred while deploying the application! Are you in a wrong folder, maybe?'
+	deploy: 'An error occurred while deploying the application! Are you in a wrong folder, maybe?',
+	proxy: 'An error occurred while configuring proxy rules!'
 };
 
 module.exports = function (type, details) {
