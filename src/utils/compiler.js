@@ -3,6 +3,7 @@ let webpackDevServer = require('webpack-dev-server');
 let path = require('path');
 let _ = require('underscore');
 let Notifier = require('./notifier');
+let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(mode = 'dev', options, callback) {
 	let webpackConfigPath = path.resolve(process.cwd(), `build/webpack.config.${mode}.js`);
@@ -44,6 +45,22 @@ module.exports = function(mode = 'dev', options, callback) {
 		webpackConfig.plugins.unshift( new webpack.HotModuleReplacementPlugin() );
 
 		compiler = webpack(webpackConfig);
+
+		if (webpackConfig.devServer && webpackConfig.devServer.proxy) {
+			let proxies = webpackConfig.devServer.proxy;
+
+			for (let p in proxies) {
+				proxies[p].logProvider = function(provider) {
+					provider.error = function(error) {
+						console.log();
+						Notifier().notify('[PROXY ERROR] Details in terminal.', 'error');
+						errorHandler('proxy', error);
+					};
+
+					return provider;
+				}
+			}
+		}
 
 		new webpackDevServer(compiler, webpackConfig.devServer).listen(options.port, options.host);
 	} else {
