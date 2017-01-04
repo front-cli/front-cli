@@ -7,19 +7,29 @@ module.exports = function() {
 	let errorIcon = path.resolve(__dirname, '../../logo/compilation-error.png');
 
 	return {
+		notify(message, type = 'success') {
+			let icon = successIcon;
+
+			if (type === 'error') {
+				icon = errorIcon;
+			}
+
+			notifier.notify({
+				title: 'Front [' + pkg.name + ']',
+				message: message,
+				icon: icon,
+				sound: true,
+				time: 5000
+			});
+		},
+
 		apply(compiler) {
 			compiler.plugin('done', (stats) => {
 				let time = ((stats.endTime - stats.startTime) / 1000).toFixed(2);
-				let successMessage = 'Compilation done with success in ' + time + 's';
-				let errorMessage = 'Compilation done with errors in ' + time + 's';
+				let successMessage = '[SUCCESS] Compiled in ' + time + 's.';
+				let errorMessage = '[ERROR] Details in terminal.';
 
-				notifier.notify({
-					title: 'Front [' + pkg.name + ']',
-					message: stats.hasErrors() ? errorMessage : successMessage,
-					icon: stats.hasErrors() ? errorIcon : successIcon,
-					sound: true,
-					time: 5000
-				});
+				this.notify(stats.hasErrors() ? errorMessage : successMessage, stats.hasErrors() ? 'error' : 'success');
 			});
 		}
 	};
