@@ -45,11 +45,7 @@ module.exports = function(mode = 'dev', options, callback) {
 
 		compiler = webpack(webpackConfig);
 
-		new webpackDevServer(compiler, {
-			hot: true,
-			quiet: true,
-			clientLogLevel: 'error'
-		}).listen(options.port, options.host);
+		new webpackDevServer(compiler, webpackConfig.devServer).listen(options.port, options.host);
 	} else {
 		compiler = webpack(webpackConfig);
 
