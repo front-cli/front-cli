@@ -20,7 +20,7 @@ module.exports = function(argv) {
 		try {
 			argv.port = port;
 
-			return compiler('dev', argv, (hasErrors, details) => {
+			return compiler('dev', argv, (hasErrors, details, webpackConfig) => {
 				spinner.stop();
 
 				if (showHeader) {
@@ -28,7 +28,18 @@ module.exports = function(argv) {
 					console.log('Watching for changes:', chalk.green.bold('yes'));
 					console.log('Address:             ', chalk.green.bold(`http://${argv.host}:${chalk.cyan(argv.port)}`));
 
-					console.log();
+					if (webpackConfig.devServer && webpackConfig.devServer.proxy) {
+						let proxies = webpackConfig.devServer.proxy;
+
+						console.log();
+
+						proxies.forEach(p => {
+							console.log('Proxying all', chalk.cyan.bold(p.context), 'requests to', chalk.cyan.bold(`${p.target}`));
+							console.log();
+						});
+					} else {
+						console.log();
+					}
 
 					console.log(chalk.green.bold('Happy coding :)'));
 
