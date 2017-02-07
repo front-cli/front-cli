@@ -10,10 +10,10 @@ module.exports = function(mode = 'dev', options, callback) {
 	let webpackConfig = require(webpackConfigPath)(require);
 	let compiler;
 
-	webpackConfig.resolve.root.push( path.resolve(__dirname, '../../node_modules') );
-
+	webpackConfig.resolve.modules.push( path.resolve(__dirname, '../../node_modules') );
+	
 	webpackConfig.resolveLoader = {
-		root: [
+		modules: [
 			path.resolve(process.cwd(), 'node_modules'),
 			path.resolve(__dirname, '../../node_modules'),
 			'node_modules'
