@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 let chalk = require('chalk');
 let argv = require('minimist')(process.argv.slice(2));
 let task = process.argv.slice(2)[0] || '--help';
