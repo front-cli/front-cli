@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://front-cli.github.io">
-        <img src="https://raw.githubusercontent.com/front-cli/front-cli/master/logo/logo-lg.png" alt="Front CLI"/>
+        <img src="https://raw.githubusercontent.com/front-cli/front-cli/master/logo/logo-lg.png" width="200" alt="Front CLI"/>
     </a>
 </p>
 
@@ -29,6 +29,16 @@ front init awesomeApp
 ```
 
 Answer the questions that will be made and wait while front downloads the application dependencies. After that, the application is ready to start!
+
+### Options
+
+#### --template
+
+Inform a different template instead of the availables in [Front Templates](https://github.com/front-templates) repositories:
+
+```bash
+front init awesomeApp --template github_user/github_repo
+```
 
 ## Starting the Application
 
