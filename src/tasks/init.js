@@ -54,7 +54,7 @@ module.exports = function(argv) {
 			throw new Error(`${appName} folder is not empty`);
 		}
 
-		if (argv.template) {
+		if (typeof(argv.template) === 'string' && argv.template !== '') {
 			return downloadTemplate(argv.template);
 		}
 
