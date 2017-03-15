@@ -11,7 +11,7 @@ module.exports = function(mode = 'dev', options, callback) {
 	let compiler;
 
 	webpackConfig.resolve.modules.push( path.resolve(__dirname, '../../node_modules') );
-	
+
 	webpackConfig.resolveLoader = {
 		modules: [
 			path.resolve(process.cwd(), 'node_modules'),
@@ -25,24 +25,12 @@ module.exports = function(mode = 'dev', options, callback) {
 	}
 
 	if (mode === 'dev') {
-		let devServerEntry = path.resolve(__dirname, '../../node_modules/webpack-dev-server/client?{{host}}:{{port}}/');
+		let entry = JSON.stringify(webpackConfig.entry);
 
-		devServerEntry = devServerEntry.replace('{{host}}', `http://${options.host}`);
-		devServerEntry = devServerEntry.replace('{{port}}', options.port);
+		entry = entry.replace(/\{\{host\}\}/g, `http://${options.host}`)
+		entry = entry.replace(/\{\{port\}\}/g, options.port)
 
-		if (_.isArray(webpackConfig.entry)) {
-			webpackConfig.entry.unshift( path.resolve(__dirname, '../../node_modules/webpack/hot/dev-server') );
-			webpackConfig.entry.unshift( devServerEntry );
-		} else {
-			if (webpackConfig.entry.application) {
-				webpackConfig.entry.application.unshift( path.resolve(__dirname, '../../node_modules/webpack/hot/dev-server') );
-				webpackConfig.entry.application.unshift( devServerEntry );
-			} else {
-				throw new Error('When using multiple entry points, at least one must be called "application".');
-			}
-		}
-
-		webpackConfig.plugins.unshift( new webpack.HotModuleReplacementPlugin() );
+		webpackConfig.entry = JSON.parse(entry);
 
 		compiler = webpack(webpackConfig);
 
