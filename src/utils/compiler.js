@@ -1,7 +1,6 @@
 let webpack = require('webpack');
 let webpackDevServer = require('webpack-dev-server');
 let path = require('path');
-let _ = require('underscore');
 let Notifier = require('./notifier');
 let errorHandler = require('../utils/errorHandler');
 
@@ -27,8 +26,8 @@ module.exports = function(mode = 'dev', options, callback) {
 	if (mode === 'dev') {
 		let entry = JSON.stringify(webpackConfig.entry);
 
-		entry = entry.replace(/\{\{host\}\}/g, `http://${options.host}`)
-		entry = entry.replace(/\{\{port\}\}/g, options.port)
+		entry = entry.replace(/\{\{host\}\}/g, `http://${options.host}`);
+		entry = entry.replace(/\{\{port\}\}/g, options.port);
 
 		webpackConfig.entry = JSON.parse(entry);
 
@@ -46,7 +45,7 @@ module.exports = function(mode = 'dev', options, callback) {
 					};
 
 					return provider;
-				}
+				};
 			}
 		}
 
