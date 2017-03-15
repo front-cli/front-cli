@@ -21,9 +21,41 @@ module.exports = function(argv) {
 	let root = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
 	let spinner = ora('Creating application');
 
+	function downloadTemplate(repoPath) {
+		spinner.start();
+
+		downloadGitRepo(repoPath, root, error => {
+			if (error) {
+				spinner.stop();
+
+				fs.emptyDirSync(root);
+
+				return errorHandler('init', error);
+			}
+
+			replacer(root, { appName }, error => {
+				if (error) {
+					spinner.stop();
+
+					fs.emptyDirSync(root);
+
+					return errorHandler('init', error);
+				}
+
+				spinner.stop();
+
+				console.log(chalk.green.bold('Application created!'));
+			});
+		});
+	}
+
 	try {
 		if (!folderIsEmpty(root)) {
 			throw new Error(`${appName} folder is not empty`);
+		}
+
+		if (argv.template) {
+			return downloadTemplate(argv.template);
 		}
 
 		listTemplatesRepositories((error, repositories) => {
@@ -47,31 +79,7 @@ module.exports = function(argv) {
 			inquirer.prompt(questions).then(({ appTemplate }) => {
 				console.log();
 
-				spinner.start();
-
-				downloadGitRepo(appTemplate, root, error => {
-					if (error) {
-						spinner.stop();
-
-						fs.emptyDirSync(root);
-
-						return errorHandler('init', error);
-					}
-
-					replacer(root, { appName }, error => {
-						if (error) {
-							spinner.stop();
-
-							fs.emptyDirSync(root);
-
-							return errorHandler('init', error);
-						}
-
-						spinner.stop();
-
-						console.log(chalk.green.bold('Application created!'));
-					});
-				});
+				return downloadTemplate(appTemplate);
 			});
 		});
 	} catch(error) {
