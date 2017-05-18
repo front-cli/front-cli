@@ -1,5 +1,6 @@
 let _ = require('underscore');
 let fs = require('fs-extra');
+let klaw = require('klaw');
 
 function replaceFileContent(file, data) {
 	let content = fs.readFileSync(file, 'utf8');
@@ -13,7 +14,7 @@ module.exports = function(folder, data, callback) {
 	let files = [];
 	let re = /(node_modules|\.eot|\.woff2?|\.ttf|\.svg|\.png|\.jpg|\.jpeg|\.bmp|\.ico)/i;
 
-	fs.walk(folder)
+	klaw(folder)
 		.on('data', item => {
 			if (!item.path.match(re)) {
 				let isFile = fs.statSync(item.path).isFile();
