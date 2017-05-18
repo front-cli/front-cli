@@ -23,12 +23,17 @@ module.exports = function(argv) {
 				}
 
 				let configSrc = path.resolve(process.cwd(), 'config.js');
-				let configDest = path.resolve(process.cwd(), 'dist/config.js');
+				let configDest = path.resolve(distFolder, 'config.js');
 
 				fs.copy(configSrc, configDest, error => {
 					if (error) { throw new Error(error); }
 
 					spinner.stop();
+
+					if (argv.verbose) {
+						console.log(details);
+						console.log();
+					}
 
 					console.log(chalk.green.bold('Application built with success :)'));
 				});
