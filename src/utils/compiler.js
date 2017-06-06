@@ -79,6 +79,10 @@ module.exports = function(mode = 'dev', options, callback) {
 			});
 		}
 
-		return callback(stats.hasErrors(), details, webpackConfig);
+		if (mode === 'dev') {
+			return callback(stats.hasErrors(), details, webpackConfig);
+		} else {
+			return callback(stats.hasErrors() || stats.hasWarnings(), details, webpackConfig);
+		}
 	});
 };
