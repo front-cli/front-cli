@@ -16,27 +16,18 @@ module.exports = function(argv) {
 			if (error) { throw new Error(error); }
 
 			return compiler('prod', argv, (hasErrors, details) => {
-				if (hasErrors) {
-					spinner.stop();
+				spinner.stop();
 
+				if (hasErrors) {
 					return errorHandler('build', details);
 				}
 
-				let configSrc = path.resolve(process.cwd(), 'config.js');
-				let configDest = path.resolve(distFolder, 'config.js');
+				if (argv.verbose) {
+					console.log(details);
+					console.log();
+				}
 
-				fs.copy(configSrc, configDest, error => {
-					if (error) { throw new Error(error); }
-
-					spinner.stop();
-
-					if (argv.verbose) {
-						console.log(details);
-						console.log();
-					}
-
-					console.log(chalk.green.bold('Application built with success :)'));
-				});
+				console.log(chalk.green.bold('Success :)'));
 			});
 		});
 	} catch (error) {
