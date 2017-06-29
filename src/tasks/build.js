@@ -7,7 +7,7 @@ let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
 	let distFolder = path.resolve(process.cwd(), 'dist');
-	let spinner = ora('Building application').start();
+	let spinner = ora('Building').start();
 
 	argv.notify = argv.notify !== undefined ? argv.notify : true;
 

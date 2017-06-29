@@ -6,7 +6,7 @@ let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
 	let showHeader = true;
-	let spinner = ora('Starting application').start();
+	let spinner = ora('Starting').start();
 
 	argv.host = argv.host || '0.0.0.0';
 	argv.port = argv.port || 3000;
@@ -24,7 +24,7 @@ module.exports = function(argv) {
 				spinner.stop();
 
 				if (showHeader) {
-					console.log('Application started: ', chalk.green.bold('yes'));
+					console.log('Started:             ', chalk.green.bold('yes'));
 					console.log('Watching for changes:', chalk.green.bold('yes'));
 					console.log('Address:             ', chalk.green.bold(`http://${argv.host}:${chalk.cyan(argv.port)}`));
 

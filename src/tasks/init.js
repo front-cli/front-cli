@@ -19,7 +19,7 @@ function folderIsEmpty(folder) {
 module.exports = function(argv) {
 	let appName = argv._[1] || path.basename(process.cwd());
 	let root = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
-	let spinner = ora('Creating application');
+	let spinner = ora('Creating');
 
 	function downloadTemplate(repoPath) {
 		spinner.start();
@@ -44,7 +44,7 @@ module.exports = function(argv) {
 
 				spinner.stop();
 
-				console.log(chalk.green.bold('Application created!'));
+				console.log(chalk.green.bold('Created!'));
 			});
 		});
 	}
