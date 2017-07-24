@@ -64,7 +64,8 @@ module.exports = function(mode = 'dev', options, callback) {
 			hash: false,
 			assets: true,
 			children: false,
-			chunks: false
+			chunks: false,
+			modules: false
 		});
 
 		if (stats.hasErrors() || stats.hasWarnings()) {
@@ -75,7 +76,8 @@ module.exports = function(mode = 'dev', options, callback) {
 				hash: false,
 				assets: false,
 				children: false,
-				chunks: false
+				chunks: false,
+				modules: false
 			});
 		}
 
