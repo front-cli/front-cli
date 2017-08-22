@@ -12,7 +12,6 @@ module.exports = function() {
 	console.log('      init           creates a new project');
 	console.log('      start          runs the project in development mode');
 	console.log('      build          builds the project for production');
-	console.log('      deploy         deploys the project');
 	console.log('      help <task>    shows the <task> help');
 
 	console.log();

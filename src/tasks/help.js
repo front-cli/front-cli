@@ -5,7 +5,6 @@ module.exports = function(argv) {
 		case 'init':
 		case 'start':
 		case 'build':
-		case 'deploy':
 			require('../help/' + task)(argv);
 			break;
 

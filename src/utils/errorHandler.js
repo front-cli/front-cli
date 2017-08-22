@@ -4,7 +4,6 @@ let errorMessages = {
 	init: 'An error occurred while creating the project!',
 	start: 'An error occurred while starting the project! Are you in a wrong folder, maybe?',
 	build: 'An error occurred while building the project! Are you in a wrong folder, maybe?',
-	deploy: 'An error occurred while deploying the project! Are you in a wrong folder, maybe?',
 	proxy: 'An error occurred while configuring proxy rules!'
 };
 
