@@ -9,10 +9,11 @@ module.exports = function() {
 	console.log();
 
 	console.log('  Tasks:\n');
-	console.log('      init           creates a new project');
-	console.log('      start          runs the project in development mode');
-	console.log('      build          builds the project for production');
-	console.log('      help <task>    shows the <task> help');
+	console.log('      init            creates a new project');
+	console.log('      start           runs the project in development mode');
+	console.log('      build           builds the project for production');
+	console.log('      run <script>    run the specified <script>');
+	console.log('      help <task>     shows the <task> help');
 
 	console.log();
 

@@ -20,6 +20,7 @@ switch (task) {
 	case 'init':
 	case 'start':
 	case 'build':
+	case 'run':
 	case 'help':
 		require('./src/tasks/' + task)(argv);
 		break;
