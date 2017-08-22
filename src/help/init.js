@@ -9,4 +9,9 @@ module.exports = function() {
 	console.log('      mkdir <appName>');
 	console.log('      cd <appName>');
 	console.log('      front init');
+
+	console.log();
+
+	console.log('  Options:\n');
+	console.log('      --template       Specifies a different template in format github_user/github_repo');
 };

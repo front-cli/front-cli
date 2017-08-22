@@ -34,7 +34,7 @@ Answer the questions that will be made and wait while front downloads the applic
 
 #### --template
 
-Inform a different template instead of the availables in [Front Templates](https://github.com/front-templates) repositories:
+Specifies a different template instead of the availables in [Front Templates](https://github.com/front-templates) repositories:
 
 ```bash
 front init awesomeApp --template github_user/github_repo
@@ -60,7 +60,7 @@ Now open the address http://localhost:3000 in the browser and you'll see our app
 
 #### --host (default: 0.0.0.0)
 
-Change the development server host:
+Changes the development server host:
 
 ```bash
 front start --host 192.168.0.0
@@ -68,7 +68,7 @@ front start --host 192.168.0.0
 
 #### --port (default: 3000)
 
-Change the development server port:
+Changes the development server port:
 
 ```bash
 front start --port 8080
@@ -76,7 +76,7 @@ front start --port 8080
 
 #### --no-notify (default: false)
 
-Disable Front CLI notifications:
+Disables Front CLI notifications:
 
 ```bash
 front start --no-notify
@@ -84,7 +84,7 @@ front start --no-notify
 
 #### --config (default: build/webpack.config.dev.js)
 
-Specify which webpack config file Front CLI should use:
+Specifies which webpack config file Front CLI should use:
 
 ```bash
 front start --config some/path/some.webpack.config.js
@@ -104,15 +104,23 @@ Wait a few seconds. Now, all we have to do is to get the `dist` folder and deplo
 
 #### --no-notify (default: false)
 
-Disable Front CLI notifications:
+Disables Front CLI notifications:
 
 ```bash
 front build --no-notify
 ```
 
+#### --verbose (default: false)
+
+Shows the full webpack compilation status:
+
+```bash
+front build --verbose
+```
+
 #### --config (default: build/webpack.config.prod.js)
 
-Specify which webpack config file Front CLI should use:
+Specifies which webpack config file Front CLI should use:
 
 ```bash
 front build --config some/path/some.webpack.config.js

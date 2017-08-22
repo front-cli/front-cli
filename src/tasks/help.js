@@ -1,5 +1,3 @@
-let chalk = require('chalk');
-
 module.exports = function(argv) {
 	let task = argv._[1];
 
@@ -12,6 +10,6 @@ module.exports = function(argv) {
 			break;
 
 		default:
-			console.log(chalk.red.bold('Task not found'));
+			require('../help')();
 	}
 };

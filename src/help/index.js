@@ -9,15 +9,15 @@ module.exports = function() {
 	console.log();
 
 	console.log('  Tasks:\n');
-	console.log('      init           create a new project');
-	console.log('      start          run the project in development mode');
-	console.log('      build          build the project for production');
-	console.log('      deploy         deploy the project');
-	console.log('      help <task>    show task help');
+	console.log('      init           creates a new project');
+	console.log('      start          runs the project in development mode');
+	console.log('      build          builds the project for production');
+	console.log('      deploy         deploys the project');
+	console.log('      help <task>    shows the <task> help');
 
 	console.log();
 
 	console.log('  Options:\n');
-	console.log('      --help, -h       show this help');
-	console.log('      --version, -v    show the version');
+	console.log('      --help, -h       shows this help');
+	console.log('      --version, -v    shows the version');
 };

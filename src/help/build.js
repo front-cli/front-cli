@@ -6,6 +6,7 @@ module.exports = function() {
 	console.log();
 
 	console.log('  Options:\n');
-	console.log('      --no-notify    disable compilation notifications');
-	console.log('      --verbose      show compilation details');
+	console.log('      --no-notify    disables compilation notifications');
+	console.log('      --verbose      shows compilation details');
+	console.log('      --config       specifies which webpack config file to use (default: build/webpack.config.prod.js)');
 };
