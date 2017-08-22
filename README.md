@@ -82,6 +82,14 @@ Disable Front CLI notifications:
 front start --no-notify
 ```
 
+#### --config (default: build/webpack.config.dev.js)
+
+Specify which webpack config file Front CLI should use:
+
+```bash
+front start --config some/path/some.webpack.config.js
+```
+
 ## Building the Application
 
 When you feel that the application is done, you can prepare it for production. This reduces drastically the application size and, believe me, the users will thank you for that. To prepare the application for production, type the following command in the terminal:
@@ -100,4 +108,12 @@ Disable Front CLI notifications:
 
 ```bash
 front build --no-notify
+```
+
+#### --config (default: build/webpack.config.prod.js)
+
+Specify which webpack config file Front CLI should use:
+
+```bash
+front build --config some/path/some.webpack.config.js
 ```

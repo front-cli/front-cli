@@ -1,6 +1,7 @@
 let chalk = require('chalk');
 let portfinder = require('portfinder');
 let ora = require('ora');
+let path = require('path');
 let compiler = require('../utils/compiler');
 let errorHandler = require('../utils/errorHandler');
 
@@ -11,6 +12,7 @@ module.exports = function(argv) {
 	argv.host = argv.host || '0.0.0.0';
 	argv.port = argv.port || 3000;
 	argv.notify = argv.notify !== undefined ? argv.notify : true;
+	argv.config = argv.config ? path.resolve(argv.config) : path.resolve(process.cwd(), 'build/webpack.config.dev.js');
 
 	portfinder.basePort = argv.port;
 

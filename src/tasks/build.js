@@ -10,6 +10,7 @@ module.exports = function(argv) {
 	let spinner = ora('Building').start();
 
 	argv.notify = argv.notify !== undefined ? argv.notify : true;
+	argv.config = argv.config ? path.resolve(argv.config) : path.resolve(process.cwd(), 'build/webpack.config.prod.js');
 
 	try {
 		fs.remove(distFolder, error => {

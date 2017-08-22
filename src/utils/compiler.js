@@ -5,7 +5,7 @@ let Notifier = require('./notifier');
 let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(mode = 'dev', options, callback) {
-	let webpackConfigPath = path.resolve(process.cwd(), `build/webpack.config.${mode}.js`);
+	let webpackConfigPath = options.config;
 	let webpackConfig = require(webpackConfigPath)(require);
 	let compiler;
 
