@@ -1,6 +1,6 @@
 {
 	"name": "front-cli",
-	"version": "0.0.1-alpha29",
+	"version": "0.0.1-alpha30",
 	"description": "A simple tool to automate front-end development",
 	"main": "index.js",
 	"preferGlobal": true,
@@ -34,25 +34,25 @@
 		"babel-loader": "^7.1.2",
 		"babel-preset-env": "^1.6.0",
 		"chalk": "^2.1.0",
-		"css-loader": "^0.28.5",
+		"css-loader": "^0.28.7",
 		"download-git-repo": "^1.0.1",
-		"extract-text-webpack-plugin": "^3.0.0",
-		"file-loader": "^0.11.2",
-		"fs-extra": "^4.0.1",
+		"extract-text-webpack-plugin": "^3.0.1",
+		"file-loader": "^1.1.4",
+		"fs-extra": "^4.0.2",
 		"html-webpack-plugin": "^2.30.1",
-		"inquirer": "^3.2.2",
+		"inquirer": "^3.3.0",
 		"klaw": "^2.1.0",
 		"minimist": "^1.2.0",
 		"node-notifier": "^5.1.2",
 		"ora": "^1.3.0",
 		"portfinder": "^1.0.13",
-		"request": "^2.81.0",
-		"style-loader": "^0.18.2",
+		"request": "^2.83.0",
+		"style-loader": "^0.19.0",
 		"underscore": "^1.8.3",
-		"webpack": "^3.5.5",
-		"webpack-dev-server": "^2.7.1"
+		"webpack": "^3.6.0",
+		"webpack-dev-server": "^2.9.1"
 	},
 	"devDependencies": {
-		"eslint": "^4.5.0"
+		"eslint": "^4.8.0"
 	}
 }
