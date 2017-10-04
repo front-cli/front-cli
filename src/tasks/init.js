@@ -1,7 +1,7 @@
 let fs = require('fs-extra');
 let path = require('path');
 let chalk = require('chalk');
-let ora = require('ora');
+let ProgressBar = require('progress');
 let inquirer = require('inquirer');
 let listTemplatesRepositories = require('../utils/listTemplatesRepositories');
 let downloadGitRepo = require('download-git-repo');
@@ -18,31 +18,41 @@ function folderIsEmpty(folder) {
 
 module.exports = function(argv) {
 	let appName = argv._[1] || path.basename(process.cwd());
-	let root = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
-	let spinner = ora('Creating');
+	let dest = argv._[1] ? path.join(process.cwd(), appName) : process.cwd();
+	let progress = new ProgressBar(`0% ${chalk.green.bold(':bar')} 100% (:elapsed seconds)`, {
+		incomplete: ' ',
+		complete: '■',
+		width: 20,
+		total: 100,
+		clear: false
+	});
+	let timer;
 
 	function downloadTemplate(repoPath) {
-		spinner.start();
+		timer = setInterval(() => {
+			if (progress.complete) {
+				clearInterval(timer);
+				console.log();
+			} else {
+				progress.tick(2.5);
+			}
+		}, 1000);
 
-		downloadGitRepo(repoPath, root, error => {
+		downloadGitRepo(repoPath, dest, error => {
+			progress.tick(100);
+
 			if (error) {
-				spinner.stop();
-
-				fs.emptyDirSync(root);
+				fs.emptyDirSync(dest);
 
 				return errorHandler('init', error);
 			}
 
-			replacer(root, { appName }, error => {
+			replacer(dest, { appName }, error => {
 				if (error) {
-					spinner.stop();
-
-					fs.emptyDirSync(root);
+					fs.emptyDirSync(dest);
 
 					return errorHandler('init', error);
 				}
-
-				spinner.stop();
 
 				console.log(chalk.green.bold('Created!'));
 			});
@@ -50,7 +60,7 @@ module.exports = function(argv) {
 	}
 
 	try {
-		if (!folderIsEmpty(root)) {
+		if (!folderIsEmpty(dest)) {
 			throw new Error(`${appName} folder is not empty`);
 		}
 
@@ -83,7 +93,7 @@ module.exports = function(argv) {
 			});
 		});
 	} catch(error) {
-		spinner.stop();
+		progress.tick(100);
 
 		errorHandler('init', error);
 	}

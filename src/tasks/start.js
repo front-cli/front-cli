@@ -1,13 +1,11 @@
 let chalk = require('chalk');
 let portfinder = require('portfinder');
-let ora = require('ora');
 let path = require('path');
 let compiler = require('../utils/compiler');
 let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
 	let showHeader = true;
-	let spinner = ora('Starting').start();
 
 	argv.host = argv.host || '0.0.0.0';
 	argv.port = argv.port || 3000;
@@ -23,8 +21,6 @@ module.exports = function(argv) {
 			argv.port = port;
 
 			return compiler('dev', argv, (hasErrors, details, webpackConfig) => {
-				spinner.stop();
-
 				if (showHeader) {
 					console.log('Started:             ', chalk.green.bold('yes'));
 					console.log('Watching for changes:', chalk.green.bold('yes'));
@@ -50,11 +46,13 @@ module.exports = function(argv) {
 
 				console.log();
 
-				console.log(details);
+				if (hasErrors) {
+					errorHandler('start', details);
+				} else {
+					console.log(details);
+				}
 			});
 		} catch (error) {
-			spinner.stop();
-
 			errorHandler('start', error);
 		}
 	});

@@ -1,5 +1,4 @@
 let chalk = require('chalk');
-let ora = require('ora');
 let fs = require('fs-extra');
 let path = require('path');
 let compiler = require('../utils/compiler');
@@ -7,7 +6,6 @@ let errorHandler = require('../utils/errorHandler');
 
 module.exports = function(argv) {
 	let distFolder = path.resolve(process.cwd(), 'dist');
-	let spinner = ora('Building').start();
 
 	argv.notify = argv.notify !== undefined ? argv.notify : true;
 	argv.config = argv.config ? path.resolve(argv.config) : path.resolve(process.cwd(), 'build/webpack.config.prod.js');
@@ -17,8 +15,6 @@ module.exports = function(argv) {
 			if (error) { throw new Error(error); }
 
 			return compiler('prod', argv, (hasErrors, details) => {
-				spinner.stop();
-
 				if (hasErrors) {
 					return errorHandler('build', details);
 				}
@@ -32,8 +28,6 @@ module.exports = function(argv) {
 			});
 		});
 	} catch (error) {
-		spinner.stop();
-
 		errorHandler('build', error);
 	}
 };

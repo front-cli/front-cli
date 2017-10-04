@@ -1,5 +1,7 @@
 let webpack = require('webpack');
 let webpackDevServer = require('webpack-dev-server');
+let ProgressBarPlugin = require('progress-bar-webpack-plugin');
+let chalk = require('chalk');
 let path = require('path');
 let Notifier = require('./notifier');
 let errorHandler = require('../utils/errorHandler');
@@ -17,6 +19,14 @@ module.exports = function(mode = 'dev', options, callback) {
 			'node_modules'
 		]
 	};
+
+	webpackConfig.plugins.push( new ProgressBarPlugin({
+		format: `0% ${chalk.green.bold(':bar')} 100% (:elapsed seconds)`,
+		incomplete: ' ',
+		complete: '■',
+		clear: false,
+		summary: false
+	}) );
 
 	if (options.notify) {
 		webpackConfig.plugins.push( new Notifier() );
