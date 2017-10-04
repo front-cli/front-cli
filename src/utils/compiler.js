@@ -24,7 +24,7 @@ module.exports = function(mode = 'dev', options, callback) {
 		format: `0% ${chalk.green.bold(':bar')} 100% (:elapsed seconds)`,
 		incomplete: ' ',
 		complete: '■',
-		clear: false,
+		clear: mode === 'dev' ? true : false,
 		summary: false
 	}) );
 
