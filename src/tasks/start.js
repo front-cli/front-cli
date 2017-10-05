@@ -22,9 +22,7 @@ module.exports = function(argv) {
 
 			return compiler('dev', argv, (hasErrors, details, webpackConfig) => {
 				if (showHeader) {
-					console.log('Started:             ', chalk.green.bold('yes'));
-					console.log('Watching for changes:', chalk.green.bold('yes'));
-					console.log('Address:             ', chalk.green.bold(`http://${argv.host}:${chalk.cyan(argv.port)}`));
+					console.log('Started and listening at:', chalk.green.bold(`http://localhost:${chalk.cyan(argv.port)}`));
 
 					if (webpackConfig.devServer && webpackConfig.devServer.proxy) {
 						let proxies = webpackConfig.devServer.proxy;
