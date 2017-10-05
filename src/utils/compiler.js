@@ -33,11 +33,12 @@ module.exports = function(mode = 'dev', options, callback) {
 	}
 
 	if (mode === 'dev') {
-		webpackDevServer.addDevServerEntrypoints(webpackConfig, {
-			host: options.host,
-			port: options.port,
-			hot: true
-		});
+		let entry = JSON.stringify(webpackConfig.entry);
+
+		entry = entry.replace(/\{\{host\}\}/g, `http://${options.host}`);
+		entry = entry.replace(/\{\{port\}\}/g, options.port);
+
+		webpackConfig.entry = JSON.parse(entry);
 
 		compiler = webpack(webpackConfig);
 
